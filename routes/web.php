@@ -41,6 +41,19 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
     Route::get('attendance/mypage', ['as' => 'attendance.mypage', 'uses' => 'AttendanceController@showMypage']);
 
     Route::resource('report', DailyReportController::class);
+    Route::get('question', 'QuestionController@index')->name('question.index');
+    Route::get('question/create', 'QuestionController@create')->name('question.create');
+    // Route::get('question/mypage', ['as' => 'question.mypage', 'uses' => 'QuestionController@mypage']);
+    Route::get('question/mypage', 'QuestionController@mypage')->name('question.mypage');
+    Route::delete('question/{id}', 'QuestionController@destroy')->name('questioon.destroy');
+    // Route::delete('question/{id}', ['as' => 'question.destroy', 'uses' => 'QuestionController@destroy']);
+    Route::get('question/{id}/edit', ['as' => 'question.edit', 'uses' => 'QuestionController@edit']);
+    Route::get('question/{id}', ['as' => 'question.show', 'uses' => 'QuestionController@show']);
+    Route::post('question/{id}/confirm', ['as' => 'question.editConfirm', 'uses' => 'QuestionController@editConfirm']);
+    Route::post('question/confirm', ['as' => 'question.createConfirm', 'uses' => 'QuestionController@createConfirm']);
+    Route::put('question/{id}', ['as' => 'question.update', 'uses' => 'QuestionController@update']);
+    Route::post('question/{id}/comment', ['as' => 'question.comment', 'uses' => 'QuestionController@comment']);
+    Route::put('question', ['as' => 'question.store', 'uses' => 'QuestionController@store']);
 
 });
 
