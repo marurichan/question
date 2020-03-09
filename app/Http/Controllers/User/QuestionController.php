@@ -3,15 +3,30 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\QuestionsRequest;
+use App\Models\Question;
+use App\Models\Comment;
+use App\Models\TagCategory;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
-    public function __construct()
+
+    protected $question;
+    protected $comment;
+    protected $tagCategory;
+    const paginateCount = 10;
+
+    public function __construct(Question $question, Comment $comment, TagCategory $tagCategory)
     {
         $this->middleware('auth');
+        $this->question = $question;
+        $this->comment = $comment;
+        $this->tagCategory = $tagCategory;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +34,12 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        return view('user.question.index');
+        $questions = $this->question->orderBy('created_at', 'desc')
+                                    ->paginate(self::paginateCount);
+        $tagCategories = $this->tagCategory->all();
+        $users = User::all();
+        $comments = $this->comment->all();
+        return view('user.question.index', compact('questions', 'tagCategories', 'users', 'comments'));
     }
 
     /**
@@ -29,7 +49,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $tagCategories = $this->tagCategory->all();
+        return view('user.question.create', compact('tagCategories'));
     }
 
     /**
@@ -38,9 +59,9 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionsRequest $request)
     {
-        //
+        return redirect()->to('question');
     }
 
     /**
@@ -51,7 +72,10 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = $this->question->where('id', $id)->first();
+        $user = User::all()->where('id', $question->user_id)->first();
+        $category = $this->tagCategory->where('id', $question->tag_category_id)->first();
+        return view('user.question.show', compact('question', 'user', 'category'));
     }
 
     /**
@@ -62,7 +86,7 @@ class QuestionController extends Controller
      */
     public function mypage()
     {
-        //
+        return view('user.question.mypage');
     }
 
     /**
@@ -73,7 +97,7 @@ class QuestionController extends Controller
      */
     public function editConfirm()
     {
-        //
+        return view('user.question.confirm');
     }
 
     /**
@@ -82,9 +106,10 @@ class QuestionController extends Controller
      * 
      * 
      */
-    public function createConfirm()
+    public function createConfirm(QuestionsRequest $request)
     {
-        //
+        $tagCategoryName = $this->tagCategory->where('id', $request->tag_category_id)->first()->name;
+        return view('user.question.confirm', compact('request', 'tagCategoryName'));
     }
 
     /**
@@ -93,7 +118,7 @@ class QuestionController extends Controller
      * 
      * 
      */
-    public function comment()
+    public function comment($id)
     {
         //
     }
@@ -106,7 +131,7 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('user.question.edit');
     }
 
     /**

@@ -5,20 +5,20 @@
 <div class="main-wrap">
   <div class="panel panel-success">
     <div class="panel-heading">
-      <img src="" class="avatar-img">
-      <p>&nbsp;さんの質問&nbsp;&nbsp;(&nbsp;&nbsp;)</p>
-      <p class="question-date"></p>
+      <img src="{{ $user->avatar }}" class="avatar-img">
+      <p>{{ $user->name }}&nbsp;さんの質問&nbsp;&nbsp;(&nbsp;{{ $category->name }}&nbsp;)</p>
+      <p class="question-date">{{ $question->created_at }}</p>
     </div>
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
         <tbody>
           <tr>
             <th class="table-column">Title</th>
-            <td class="td-text"></td>
+            <td class="td-text">{{ $question->title }}</td>
           </tr>
           <tr>
             <th class="table-column">Question</th>
-            <td class='td-text'></td>
+            <td class='td-text'>{{ $question->content }}</td>
           </tr>
         </tbody>
       </table>
