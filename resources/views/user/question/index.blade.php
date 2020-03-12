@@ -6,7 +6,7 @@
   {!! Form::open(['route' => 'question.index', 'method' => 'GET']) !!}
     <div class="btn-wrapper">
       <div class="search-box">
-        {!! Form::input('text', 'search_word', '', ['class'=>'form-control search-form', 'placeholder'=>'Search words...']) !!}
+        {!! Form::input('text', 'search_word', null, ['class'=>'form-control search-form', 'placeholder'=>'Search words...']) !!}
         {!! Form::button('<i class="fa fa-search" aria-hidden="true"></i>', ['type' => 'submit', 'class' => 'search-icon']) !!}
       </div>
       <a class="btn" href="{{ route('question.create') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
@@ -19,7 +19,7 @@
       @foreach ($tagCategories as $tagCategory)
       <div class="btn {{ $tagCategory->name }}" id="{{ $tagCategory->id }}">{{ $tagCategory->name }}</div>
       @endforeach
-      {!! Form::input('hidden', 'tag_category_id', '', ['id' => 'category-val']) !!}
+      {!! Form::input('hidden', 'tag_category_id', null, ['id' => 'category-val']) !!}
     </div>
   {!! Form::close() !!}
   <div class="content-wrapper table-responsive">
@@ -49,10 +49,8 @@
       @endforeach
       </tbody>
     </table>
-    
     <div aria-label="Page navigation example" class="text-center">{{ $questions->appends(request()->all())->links() }}</div>
   </div>
 </div>
 
 @endsection
-

@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
-
     protected $question;
     protected $comment;
     protected $tagCategory;
@@ -31,9 +30,10 @@ class QuestionController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * 質問掲示板一覧画面
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -50,9 +50,9 @@ class QuestionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 新規作成画面
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -61,10 +61,10 @@ class QuestionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 新規作成のバリデーションと保存
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\User\QuestionsRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(QuestionsRequest $request)
     {
@@ -75,38 +75,40 @@ class QuestionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 質問詳細画面
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show($id)
     {
         $question = $this->question->where('id', $id)->first();
         $users = $this->user->all();
-        $category = $this->tagCategory->where('id', $question->tag_category_id);
+        $tagCategoryName = $this->tagCategory->where('id', $question->tag_category_id)->first()->name;
         $comments = $this->comment->all()->where('question_id', $question->id);
-        return view('user.question.show', compact('question', 'users', 'category', 'comments'));
+        return view('user.question.show', compact('question', 'users', 'tagCategoryName', 'comments'));
     }
 
     /**
-     * 
+     * マイページ画面
      *
-     * 
-     * 
+     * @param  int  $id
+     * @return \Illuminate\View\View
      */
     public function mypage($id)
     {
         $questions = $this->question->all()->where('user_id', $id);
-        $categories = $this->tagCategory->all();
-        return view('user.question.mypage', compact('questions', 'categories'));
+        $tagCategories = $this->tagCategory->all();
+        return view('user.question.mypage', compact('questions', 'tagCategories'));
     }
 
     /**
-     * 
+     * 質問編集確認画面
      *
      * 
-     * 
+     * @param  \App\Http\Requests\User\QuestionsRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\View\View
      */
     public function editConfirm(QuestionsRequest $request, $id)
     {
@@ -115,10 +117,10 @@ class QuestionController extends Controller
     }
 
     /**
-     * 
+     * 質問新規作成確認画面
      *
-     * 
-     * 
+     * @param  \App\Http\Requests\User\QuestionsRequest  $request
+     * @return \Illuminate\View\View
      */
     public function createConfirm(QuestionsRequest $request)
     {
@@ -127,10 +129,11 @@ class QuestionController extends Controller
     }
 
     /**
-     * 
+     * コメント新規作成
      *
-     * 
-     * 
+     * @param  \App\Http\Requests\User\QuestionsRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function comment(CommentRequest $request, $id)
     {
@@ -140,10 +143,10 @@ class QuestionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 質問編集画面
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {
@@ -153,11 +156,11 @@ class QuestionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 質問編集のバリデーションと保存
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\User\QuestionsRequest  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(QuestionsRequest $request, $id)
     {
@@ -167,10 +170,10 @@ class QuestionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 質問の削除
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {

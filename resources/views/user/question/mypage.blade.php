@@ -21,7 +21,7 @@
       @foreach ($questions as $question)
         <tr class="row">
           <td class="col-xs-2"></td>
-          <td class="col-xs-1">{{ $categories->where('id', $question->tag_category_id)->first()->name }}</td>
+          <td class="col-xs-1">{{ $tagCategories->where('id', $question->tag_category_id)->first()->name }}</td>
           <td class="col-xs-5">{{ $question->title }}</td>
           <td class="col-xs-2"><span class="point-color"></span></td>
           <td class="col-xs-1">
@@ -31,9 +31,7 @@
           </td>
           <td class="col-xs-1">
             {!! Form::open(['route' => ['question.destroy', $question->id], 'method' => 'DELETE']) !!}
-              <button class="btn btn-danger" type="submit">
-                <i class="fa fa-trash-o" aria-hidden="true"></i>
-              </button>
+              {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
             {!! Form::close() !!}
           </td>
         </tr>
@@ -44,4 +42,3 @@
 </div>
 
 @endsection
-
