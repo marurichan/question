@@ -23,14 +23,18 @@
     </div>
   </div>
   <div class="btn-bottom-wrapper">
-    <form>
+  @if ($request->confirm === 'create')
+    {!! Form::open(['route' => 'question.store', 'method' => 'POST']) !!}
+  @else
+    {!! Form::open(['route' => ['question.update', $id], 'method' => 'POST']) !!}
+  @endif
       {{ csrf_field() }}
       <input name="user_id" type="hidden" value="{{ Auth::user()->id }}">
       <input name="tag_category_id" type="hidden" value="{{ $request->tag_category_id }}">
       <input name="title" type="hidden" value="{{ $request->title }}">
       <input name="content" type="hidden" value="{{ $request->content }}">
       <button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i></button>
-    </form>
+    {!! Form::close() !!}
   </div>
 </div>
 

@@ -26,7 +26,7 @@ class QuestionsRequest extends FormRequest
         return [
             'tag_category_id' => 'required',
             'title' => 'required|max:30',
-            'content' => 'required|max:250'
+            'content' => 'required|max:250',
         ];
     }
 

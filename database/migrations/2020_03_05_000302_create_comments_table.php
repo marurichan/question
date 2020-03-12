@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('question_id');
-            $table->string('content',255);
+            $table->string('comment',255);
             $table->timestamps();
             $table->softDeletes();
         });

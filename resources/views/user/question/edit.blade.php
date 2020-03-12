@@ -5,24 +5,26 @@
 
 <div class="main-wrap">
   <div class="container">
-    <form>
+    {!! Form::open(['route' => ['question.editConfirm', $question->id], 'method' => 'POST']) !!}
       <div class="form-group">
         <select name='tag_category_id' class = "form-control selectpicker form-size-small" id ="pref_id">
-          <option value=""></option>
-            <option value= ""></option>
+          <option value="{{ $tagCategories->where('id', $question->tag_category_id)->first()->id }}">{{ $tagCategories->where('id', $question->tag_category_id)->first()->name}}</option>
+            @foreach ($tagCategories as $tagCategory)
+            <option value= "{{ $tagCategory->id }}">{{ $tagCategory->name }}</option>
+            @endforeach
         </select>
         <span class="help-block"></span>
       </div>
       <div class="form-group">
-        <input class="form-control" placeholder="title" name="title" type="text" value="">
-        <span class="help-block"></span>
+        {!! Form::input('text', 'title', $question->title, ['class' => 'form-control', 'placeholder' => 'title']) !!}
+        <span class="help-block">{{ $errors->first('title') }}</span>
       </div>
       <div class="form-group">
-        <textarea class="form-control" placeholder="Please write down your question here..." name="content" cols="50" rows="10"></textarea>
-        <span class="help-block"></span>
+        {!! Form::textarea('content', $question->content, ['class' => 'form-control', 'placeholder' => 'Please write down your question here...', 'cols' => '50', 'rows' => '10']) !!}
+        <span class="help-block">{{ $errors->first('content') }}</span>
       </div>
-      <input name="confirm" class="btn btn-success pull-right" type="submit" value="update">
-    </form>
+      {!! Form::input('submit', 'confirm', 'update', ['class' => 'btn btn-success pull-right']) !!}
+    {!! Form::close() !!}
   </div>
 </div>
 
