@@ -2,14 +2,13 @@
 @section ('content')
 
 <h1 class="brand-header">質問編集</h1>
-
 <div class="main-wrap">
   <div class="container">
     {!! Form::open(['route' => ['question.editConfirm', $question->id], 'method' => 'POST']) !!}
       <div class="form-group @if($errors->has('tag_category_id')) has-error @endif">
         {!! Form::select(
           'tag_category_id',
-          [$tagCategories->where('id', $question->tag_category_id)->first()->id => $tagCategories->where('id', $question->tag_category_id)->first()->name] + array_pluck($tagCategories,'name','id'),
+          [$question->tag_category_id => $tagCategories->where('id', $question->tag_category_id)->first()->name] + array_pluck($tagCategories,'name','id'),
           old('tag_category_id'),
           ['class' => 'form-control selectpicker form-size-small', 'id' => 'pref_id']
         ) !!}
