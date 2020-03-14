@@ -16,9 +16,19 @@ class Question extends Model
         'content'
     ];
 
-    protected $dates = [
-        'created_at',
-        'update_at',
-        'deleted_at'
-    ];
+    public function comment()
+    {
+        return $this->hasOne('App\Models\comment');
+    }
+
+    public function tagCategory()
+    {
+        return $this->belongsTo('App\Models\tagCategory');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\user');
+    }
+    
 }

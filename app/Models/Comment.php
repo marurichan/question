@@ -15,9 +15,9 @@ class Comment extends Model
         'comment'
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
+    public function user()
+    {
+        return $this->belongsTo('App\Models\user');
+    }
+    
 }

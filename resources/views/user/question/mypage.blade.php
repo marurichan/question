@@ -2,7 +2,7 @@
 @section ('content')
 
 <h2 class="brand-header">
-  <img src="" class="avatar-img">&nbsp;&nbsp;My page
+  <img src="{{ Auth::user()->avatar }}" class="avatar-img">{!! Html::nbsp(2) !!}My page
 </h2>
 <div class="main-wrap">
   <div class="content-wrapper table-responsive">
@@ -20,10 +20,10 @@
       <tbody>
       @foreach ($questions as $question)
         <tr class="row">
-          <td class="col-xs-2"></td>
-          <td class="col-xs-1">{{ $tagCategories->where('id', $question->tag_category_id)->first()->name }}</td>
+          <td class="col-xs-2">{{ $question->updated_at->format('Y-m-d') }}</td>
+          <td class="col-xs-1">{{ $question->tagCategory->name }}</td>
           <td class="col-xs-5">{{ $question->title }}</td>
-          <td class="col-xs-2"><span class="point-color"></span></td>
+          <td class="col-xs-2"><span class="point-color">{{ $question->comment()->count() }}</span></td>
           <td class="col-xs-1">
             <a class="btn btn-success" href="{{ route('question.edit', ['id' => $question->id]) }}">
               <i class="fa fa-pencil" aria-hidden="true"></i>

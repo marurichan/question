@@ -24,7 +24,7 @@ class QuestionsRequest extends FormRequest
     public function rules()
     {
         return [
-            'tag_category_id' => 'required',
+            'tag_category_id' => 'required|exists:tag_categories,id',
             'title' => 'required|max:30',
             'content' => 'required|max:250',
         ];
@@ -34,6 +34,7 @@ class QuestionsRequest extends FormRequest
     {
         return [
             'tag_category_id.required' => '選択してください',
+            'exists' => '存在しないカテゴリーです',
             'required' => '入力必須の項目です。',
             'max' => ':max文字以内で入力してください。'
         ];
