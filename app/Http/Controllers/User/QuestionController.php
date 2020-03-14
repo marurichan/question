@@ -88,7 +88,6 @@ class QuestionController extends Controller
     /**
      * マイページ画面
      *
-     * @param  int  $questionId
      * @return \Illuminate\View\View
      */
     public function showMypage()
