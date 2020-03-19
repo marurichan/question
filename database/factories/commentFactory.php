@@ -1,8 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Models\Comment;
 
-$factory->define(App\Models\Comment::class, function (Faker $faker) {
+$factory->define(Comment::class, function (Faker $faker) {
     return [
         'user_id' => $faker->numberBetween($min = 1, $max = 4),
         'question_id' => $faker->numberBetween($min = 1, $max = 100),

@@ -1,8 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Models\Question;
 
-$factory->define(App\Models\Question::class, function (Faker $faker) {
+$factory->define(Question::class, function (Faker $faker) {
     return [
         'user_id' => $faker->numberBetween($min = 1, $max = 4),
         'tag_category_id' => $faker->numberBetween($min = 1, $max = 4),

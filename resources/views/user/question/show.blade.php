@@ -5,8 +5,8 @@
 <div class="main-wrap">
   <div class="panel panel-success">
     <div class="panel-heading">
-      <img src="{{ $questionUser->avatar }}" class="avatar-img">
-      <p>{{ $questionUser->name }}{!! Html::nbsp() !!}さんの質問{!! Html::nbsp(2) !!}({!! Html::nbsp() !!}{{ $tagCategoryName }}{!! Html::nbsp() !!})</p>
+      <img src="{{ $question->user->avatar }}" class="avatar-img">
+      <p>{{ $question->user->name }}{!! Html::nbsp() !!}さんの質問{!! Html::nbsp(2) !!}({!! Html::nbsp() !!}{{ $question->tagCategory->name }}{!! Html::nbsp() !!})</p>
       <p class="question-date">{{ $question->updated_at->format('Y-m-d H:i') }}</p>
     </div>
     <div class="table-responsive">
@@ -18,7 +18,7 @@
           </tr>
           <tr>
             <th class="table-column">Question</th>
-            <td class='td-text'>{{ $question->content }}</td>
+            <td class='td-text'>{!! nl2br(e($question->content)) !!}</td>
           </tr>
         </tbody>
       </table>
@@ -38,7 +38,6 @@
     </div>
   <div class="comment-box">
     {!! Form::open(['route' => ['question.comment', $question->id], 'method' => 'POST']) !!}
-      {!! Form::input('hidden', 'user_id', Auth::id()) !!}
       {!! Form::input('hidden', 'question_id', $question->id) !!}
       <div class="comment-title">
         <img src="{{ Auth::user()->avatar }}" class="avatar-img"><p>コメントを投稿する</p>

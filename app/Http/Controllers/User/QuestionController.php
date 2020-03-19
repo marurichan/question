@@ -8,17 +8,16 @@ use App\Http\Requests\User\CommentRequest;
 use App\Models\Question;
 use App\Models\Comment;
 use App\Models\TagCategory;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
-    const PAGINATECOUNT = 10;
+    const PAGINATE_COUNT = 10;
 
-    protected $question;
-    protected $comment;
-    protected $tagCategory;
+    private $question;
+    private $comment;
+    private $tagCategory;
 
     public function __construct(Question $question, Comment $comment, TagCategory $tagCategory)
     {
@@ -41,9 +40,9 @@ class QuestionController extends Controller
         $questions = $this->question->where('tag_category_id', 'LIKE', $searchCategory)
                                     ->where('title', 'LIKE', '%' . $searchWord . '%')
                                     ->orderBy('updated_at', 'desc')
-                                    ->paginate(self::PAGINATECOUNT);
+                                    ->paginate(self::PAGINATE_COUNT);
         $tagCategories = $this->tagCategory->all();
-        return view('user.question.index', compact('questions', 'tagCategories'));
+        return view('user.question.index', compact('questions', 'tagCategories', 'searchWord'));
     }
 
     /**
@@ -79,10 +78,8 @@ class QuestionController extends Controller
      */
     public function show($questionId)
     {
-        $question = $this->question->where('id', $questionId)->first();
-        $questionUser = $question->user()->first();
-        $tagCategoryName = $question->tagCategory()->first()->name;
-        return view('user.question.show', compact('question', 'questionUser', 'tagCategoryName'));
+        $question = $this->question->find($questionId);
+        return view('user.question.show', compact('question'));
     }
 
     /**
@@ -131,6 +128,7 @@ class QuestionController extends Controller
     public function comment(CommentRequest $request)
     {
         $input = $request->all();
+        $input['user_id'] = Auth::id();
         $this->comment->fill($input)->save();
         return redirect()->route('question.index');
     }
@@ -143,7 +141,7 @@ class QuestionController extends Controller
      */
     public function edit($questionId)
     {
-        $question = $this->question->all()->where('id', $questionId)->first();
+        $question = $this->question->find($questionId);
         $tagCategories = $this->tagCategory->all();
         return view('user.question.edit', compact('question', 'tagCategories'));
     }

@@ -8,8 +8,8 @@
       <div class="form-group @if ($errors->has('tag_category_id')) has-error @endif">
         {!! Form::select(
           'tag_category_id',
-          [$question->tag_category_id => $question->tagCategory->name] + array_pluck($tagCategories, 'name', 'id'),
-          old('tag_category_id'),
+          array_pluck($tagCategories, 'name', 'id'),
+          $question->tag_category_id,
           ['class' => 'form-control selectpicker form-size-small', 'id' => 'tag_categry_id']
         ) !!}
         <span class="help-block">{{ $errors->first('tag_category_id') }}</span>

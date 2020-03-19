@@ -18,7 +18,7 @@ class Question extends Model
 
     public function comment()
     {
-        return $this->hasOne('App\Models\comment');
+        return $this->hasMany('App\Models\comment');
     }
 
     public function tagCategory()
@@ -28,7 +28,7 @@ class Question extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\user');
+        return $this->belongsTo('App\Models\User');
     }
     
 }

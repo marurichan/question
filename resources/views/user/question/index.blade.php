@@ -6,7 +6,7 @@
   {!! Form::open(['route' => 'question.index', 'method' => 'GET']) !!}
     <div class="btn-wrapper">
       <div class="search-box">
-        {!! Form::input('text', 'search_word', null, ['class'=>'form-control search-form', 'placeholder'=>'Search words...']) !!}
+        {!! Form::input('text', 'search_word', $searchWord, ['class'=>'form-control search-form', 'placeholder'=>'Search words...']) !!}
         {!! Form::button('<i class="fa fa-search" aria-hidden="true"></i>', ['type' => 'submit', 'class' => 'search-icon']) !!}
       </div>
       <a class="btn" href="{{ route('question.create') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
@@ -38,7 +38,7 @@
         <tr class="row">
           <td class="col-xs-1"><img src="{{ $question->user->avatar }}" class="avatar-img"></td>
           <td class="col-xs-2">{{ $question->tagCategory->name }}</td>
-          <td class="col-xs-6">{{ $question->title }}</td>
+          <td class="col-xs-6">{{ str_limit($question->title, 30) }}</td>
           <td class="col-xs-1"><span class="point-color">{{ $question->comment()->count() }}</span></td>
           <td class="col-xs-2">
             <a class="btn btn-success" href="{{ route('question.show', ['id' => $question->id]) }}">
