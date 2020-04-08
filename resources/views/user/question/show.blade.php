@@ -37,7 +37,7 @@
       @endforeach
     </div>
   <div class="comment-box">
-    {!! Form::open(['route' => ['question.comment', $question->id], 'method' => 'POST']) !!}
+    {!! Form::open(['route' => 'question.comment', 'method' => 'PUT']) !!}
       {!! Form::input('hidden', 'question_id', $question->id) !!}
       <div class="comment-title">
         <img src="{{ Auth::user()->avatar }}" class="avatar-img"><p>コメントを投稿する</p>

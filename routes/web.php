@@ -47,9 +47,9 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
     Route::delete('question/{id}', 'QuestionController@destroy')->name('question.destroy');
     Route::get('question/{id}/edit', 'QuestionController@edit') ->name('question.edit');
     Route::get('question/{id}', 'QuestionController@show')->name('question.show');
-    Route::post('question/{id}/confirm', 'QuestionController@editConfirm')->name('question.editConfirm');
+    Route::put('question/{id}/confirm', 'QuestionController@editConfirm')->name('question.editConfirm');
     Route::post('question/confirm', 'QuestionController@createConfirm')->name('question.createConfirm');
-    Route::post('question/{id}/comment', 'QuestionController@comment')->name('question.comment');
+    Route::put('question/comment', 'QuestionController@comment')->name('question.comment');
     Route::put('question/{id}', 'QuestionController@update')->name('question.update');
     Route::post('question', 'QuestionController@store')->name('question.store');
 

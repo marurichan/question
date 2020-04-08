@@ -37,8 +37,12 @@ class QuestionController extends Controller
     {
         $searchCategory = $request->input('tag_category_id');
         $searchWord = $request->input('search_word');
-        $questions = $this->question->where('tag_category_id', 'LIKE', $searchCategory)
-                                    ->where('title', 'LIKE', '%' . $searchWord . '%')
+        $questions = $this->question->when($searchCategory, function($query) use($searchCategory){
+                                        return $query->where('tag_category_id', $searchCategory);
+                                    })
+                                    ->when($searchWord, function($query) use($searchWord){
+                                        return $query->where('title', 'LIKE', '%' . $searchWord . '%');
+                                    })
                                     ->orderBy('updated_at', 'desc')
                                     ->paginate(self::PAGINATE_COUNT);
         $tagCategories = $this->tagCategory->all();
@@ -89,7 +93,7 @@ class QuestionController extends Controller
      */
     public function showMypage()
     {
-        $questions = $this->question->all()->where('user_id', Auth::id());
+        $questions = $this->question->where('user_id', Auth::id())->get();
         return view('user.question.mypage', compact('questions'));
     }
 
@@ -103,8 +107,8 @@ class QuestionController extends Controller
      */
     public function editConfirm(QuestionsRequest $request, $questionId)
     {
-        $tagCategoryName = $this->tagCategory->all()->where('id', $request->tag_category_id)->first()->name;
-        return view('user.question.confirm', compact('request', 'tagCategoryName', 'questionId'));
+        $tagCategoryName = $this->tagCategory->where('id', $request->tag_category_id)->first()->name;
+        return view('user.question.editConfirm', compact('request', 'tagCategoryName', 'questionId'));
     }
 
     /**
@@ -115,8 +119,8 @@ class QuestionController extends Controller
      */
     public function createConfirm(QuestionsRequest $request)
     {
-        $tagCategoryName = $this->tagCategory->all()->where('id', $request->tag_category_id)->first()->name;
-        return view('user.question.confirm', compact('request', 'tagCategoryName'));
+        $tagCategoryName = $this->tagCategory->where('id', $request->tag_category_id)->first()->name;
+        return view('user.question.createConfirm', compact('request', 'tagCategoryName'));
     }
 
     /**

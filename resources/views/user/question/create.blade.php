@@ -8,7 +8,7 @@
       <div class="form-group @if ($errors->has('tag_category_id')) has-error @endif">
         {!! Form::select(
           'tag_category_id',
-          array_pluck($tagCategories, 'name', 'id'),
+          $tagCategories->pluck('name', 'id'),
           old('tag_category_id'),
           ['placeholder' => 'Select category', 'class' => 'form-control selectpicker form-size-small', 'id' => 'tag_category_id']
         ) !!}

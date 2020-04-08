@@ -4,7 +4,7 @@
 <h1 class="brand-header">質問編集</h1>
 <div class="main-wrap">
   <div class="container">
-    {!! Form::open(['route' => ['question.editConfirm', $question->id], 'method' => 'POST']) !!}
+    {!! Form::open(['route' => ['question.editConfirm', $question->id], 'method' => 'PUT']) !!}
       <div class="form-group @if ($errors->has('tag_category_id')) has-error @endif">
         {!! Form::select(
           'tag_category_id',

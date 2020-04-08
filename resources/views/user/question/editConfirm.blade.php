@@ -23,11 +23,7 @@
     </div>
   </div>
   <div class="btn-bottom-wrapper">
-  @if ($request->confirm === 'create')
-    {!! Form::open(['route' => 'question.store', 'method' => 'POST']) !!}
-  @else
     {!! Form::open(['route' => ['question.update', $questionId], 'method' => 'PUT']) !!}
-  @endif
       {!! Form::input('hidden', 'tag_category_id', $request->tag_category_id) !!}
       {!! Form::input('hidden', 'title', $request->title) !!}
       {!! Form::input('hidden', 'content', $request->content) !!}
